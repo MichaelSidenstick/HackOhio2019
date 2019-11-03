@@ -1,46 +1,81 @@
-package Hack;
+package Hack2;
 
 public class PVector {
-
-	private double x, y;
-	private static double length;
-
-	public PVector(double x, double y)
+	float x, y, length;
+	
+	//creates vector of given x and y and finds length
+	public PVector(float x, float y)
 	{
-
-		x = this.x;
-		y = this.y;
-		length = (float) java.lang.Math.sqrt(this.x * this.x + this.y * this.y); //Calculates magnitude of angle
-
+		this.x = x;
+		this.y = y;
+		length = (float) java.lang.Math.sqrt(this.x * this.x + this.y * this.y);
 	}
 
-	public static PVector fromAngle(double rad) //Finds the components of a given angle
+//---------------------------------------------------------------------
+	
+	//returns unit vector rotated towards angle rad
+	public static PVector fromAngle(float rad)
 	{
-		double newX = length * (double) java.lang.Math.cos(rad); //X component of angle
-		double newY = length * (double) java.lang.Math.sin(rad); //Y component of angle
-		PVector angle = new PVector(newX, newY); //New direction based off components
-		return angle; //Returns vector generated
+		float newX = (float) (java.lang.Math.cos(rad));
+		float newY = (float) (java.lang.Math.sin(rad));
+		PVector angle = new PVector(newX, newY);
+		return angle;
+	}
+	
+//---------------------------------------------------------------------
+	
+	public PVector limit(float max) {
+		PVector newVect;
+		if (length > max) {
+			float newX = x * max / length;
+			float newY = y * max / length;
+			newVect = new PVector(newX, newY);
+		} else {
+			newVect = new PVector(x, y);
+		}
+		return newVect;
 	}
 
-	public double x()
+//---------------------------------------------------------------------
+	
+	//returns x component of PVector
+	public int x()
 	{
-		return x;
+		return (int) x;
 	}
 
-	public double y()
+//---------------------------------------------------------------------
+	
+	//returns y component of PVector
+	public int y()
 	{
-		return y;	
+		return (int) y;
 	}
 
+//---------------------------------------------------------------------
+	
+	//returns the PVector
 	public PVector clone()
 	{
-		
-		return new PVector(x, y); //Returns a copy of current vector of directions
-		
+		return new PVector(x,y);
+	}
+
+//---------------------------------------------------------------------
+	
+	public PVector add(PVector changeVector)
+	{
+		float newX = x + changeVector.x;
+		float newY = y + changeVector.y;
+		return new PVector(newX, newY);
 	}
 	
+//---------------------------------------------------------------------
+	
+	public int dist(PVector otherVector){
+		float xDist = x - otherVector.x;
+		float yDist = y - otherVector.y;
+		int totDist = (int) java.lang.Math.sqrt(xDist*xDist+yDist*yDist);
+		return totDist;
+	}
+
 }
-
-	
-
-	
